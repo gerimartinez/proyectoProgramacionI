@@ -6,7 +6,7 @@ Algoritmo tpProgramacion
 		Dimension rutasAereas[4]
 		Dimension cantidadPasajeros[4]
 		Dimension plazasVendidas[4]
-		Dimension datosPasajeros[4][120]//ver como se hace para guardar varios datos
+		Dimension datosPasajeros[4][120]//ver como se hace para guardar varios datos//
 		
 		
 		rutasAereas[0] = "1. Buenos Aires - Bariloche"
