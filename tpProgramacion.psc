@@ -2,11 +2,12 @@ Algoritmo tpProgramacion
 	
 	Definir rutasAereas, datosPasajeros, opcion como caracter
 	Definir cantidadPasajeros, eleccion ,rutaSeleccionada Como Entero
-	Dimension rutasAereas[4]
-	Dimension cantidadPasajeros[4]
-	Dimension plazasVendidas[4]
-	Dimension datosPasajeros[4, 120, 8] 
+	Dimension rutasAereas[5]
+	Dimension cantidadPasajeros[5]
+	Dimension plazasVendidas[5]
+	Dimension datosPasajeros[5, 120, 8] 
 	
+//	ruta = rutasAereas[rutaSeleccionada - 1]
 	rutasAereas[0] = "1. Buenos Aires - Bariloche"
 	rutasAereas[1] = "2. Bueno Aires - Salta"
 	rutasAereas[2] = "3. Rosario - Buenos Aires"
@@ -119,8 +120,8 @@ Funcion venta <- ventaPasaje(rutasAereas, plazasVendidas, cantidadPasajeros, dat
 		FinPara
 		Leer rutaSeleccionada 
 	Mientras Que rutaSeleccionada < 1 o rutaSeleccionada > 4
-//	ruta = rutasAereas[rutaSeleccionada - 1] //
-	Escribir "Ha elegido: ", rutasAereas[rutaSeleccionada -1]
+	ruta = rutasAereas[rutaSeleccionada - 1] //
+	Escribir "Ha elegido: ", ruta
 	
 	Segun rutasAereas[rutaSeleccionada -1] Hacer
 		"1. Buenos Aires - Bariloche":
@@ -195,7 +196,7 @@ Funcion datos <- cargaDatosPasajero(datosPasajeros, cantidadPasajeros, rutasAere
 		FinMientras
 		
 		// Almaceno los datos en el arreglo datosPasajeros
-		datosPasajeros[rutasAereas[rutaSeleccionada -1], asiento, 0] = nombreApellido
+		datosPasajeros[rutasAereas[rutaSeleccionada - 1], asiento, 0] = nombreApellido
 		datosPasajeros[rutasAereas[rutaSeleccionada -1], asiento, 1] = nroDni
 		datosPasajeros[rutasAereas[rutaSeleccionada -1], asiento, 2] = rutasAereas[rutaSeleccionada - 1]
 		datosPasajeros[rutasAereas[rutaSeleccionada -1], asiento,3] = telefono
@@ -363,6 +364,7 @@ FinSubProceso
 
 SubProceso ordenamientoAscendente(datosPasajeros, dim, rutaSeleccionada, rutasAereas)
 	Definir aux como Entero
+	
 	Para i=0 hasta n-2 hacer
 		Para j=i+1 hasta n-1 hacer
 			Si datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] > datosPasajeros[rutaSeleccionada-1, j, 5] Entonces
