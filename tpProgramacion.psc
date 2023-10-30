@@ -74,7 +74,7 @@ Algoritmo tpProgramacion
 				Escribir "1. Por numero de asiento Ascendente"
 				Escribir "2. Por numero de asiento Descendente"
 				Leer eleccion
-				Si eleccion ==1 Entonces 
+				Si eleccion == 1 Entonces 
 					ordenamientoAscendente(datosPasajeros, dim, rutaSeleccionada, rutasAereas) 
 //					Sino
 //						OrdenamientoDescendente
@@ -85,6 +85,14 @@ Algoritmo tpProgramacion
 				Escribir "    2. Porcentaje de ventas por ruta aerea"
 				Leer eleccion
 				Si eleccion == 1 Entonces
+					
+					Escribir "------------------------"
+					Escribir "Pasajes vendidos: ", plazasVendidas[0]
+					Escribir "Pasajes vendidos: ", plazasVendidas[1]
+					Escribir "Pasajes vendidos: ", plazasVendidas[2]
+					Escribir "Pasajes vendidos: ", plazasVendidas[3]
+					
+				SiNo
 					porcentajeVentas(plazasVendidas, cantidadPasajeros, dim, rutasAereas, dim)
 				FinSi
 				
@@ -352,7 +360,7 @@ Subproceso buscarPorNombreyApellido(datosPasajeros, dim, nombreApellidoBuscado, 
     FinPara
 	
 FinSubProceso
-//
+
 SubProceso ordenamientoAscendente(datosPasajeros, dim, rutaSeleccionada, rutasAereas)
 	Definir aux como Entero
 	Para i=0 hasta n-2 hacer
@@ -380,17 +388,29 @@ FinSubProceso
 //FinProceso
 //
 
-
 Subproceso porcentajeVentas(plazasVendidas, cantidadPasajeros, dim, rutasAereas, dim)
-    // Lista el porcentaje de ventas por ruta aérea
-    Para i = 0 Hasta 3 Hacer
-        Definir porcentajee Como Real
-        porcentajee = (plazasVendidas[i] / cantidadPasajeros[i]) * 100
-        Escribir "Ruta Aérea: ", rutasAereas[i]
-        Escribir "Porcentaje de Ventas: ", porcentaje, "%"
-    FinPara
+    // Lista de porcentaje de ventas por ruta aérea
+	Definir i, porcentaje Como real
+	porcentaje = 0 
+	
+	Escribir "Porcentaje de ventas por ruta aerea:"
+	
+	Si cantidadPasajeros[0] > 0 Entonces
+		porcentaje = (plazasVendidas[0] * 100) / cantidadPasajeros[0]
+		Escribir rutasAereas[0], ": ", porcentaje, "%"
+	FinSi
+	Si cantidadPasajeros[1] > 0 Entonces
+		porcentaje = (plazasVendidas[1] * 100) / cantidadPasajeros[1]
+		Escribir rutasAereas[1], ": ", porcentaje, "%"
+	FinSi
+	Si cantidadPasajeros[2] > 0 Entonces
+		porcentaje = (plazasVendidas[2] * 100) / cantidadPasajeros[2]
+		Escribir rutasAereas[2], ": ", porcentaje, "%"
+	FinSi
+	Si cantidadPasajeros[3] > 0 Entonces
+		porcentaje = (plazasVendidas[3] * 100) / cantidadPasajeros[3]
+		Escribir rutasAereas[3], ": ", porcentaje, "%"
+	FinSi
+		
 FinSubproceso
-//
-
-
 
