@@ -4,8 +4,8 @@ Algoritmo tpProgramacion
 	Definir cantidadPasajeros, eleccion ,rutaSeleccionada Como Entero
 	Dimension rutasAereas[4]
 	Dimension cantidadPasajeros[4]
-	Dimension plazasVendidas[4, 120]
-	Dimension datosPasajeros[5, 8] 
+	Dimension plazasVendidas[4]
+	Dimension datosPasajeros[4, 120, 8] 
 	
 //	ruta = rutasAereas[rutaSeleccionada - 1]
 	rutasAereas[0] = "1. Buenos Aires - Bariloche"
@@ -18,10 +18,10 @@ Algoritmo tpProgramacion
 	cantidadPasajeros[2] = 80
 	cantidadPasajeros[3] = 80
 	
-	plazasVendidas[0,119] = 0
-	plazasVendidas[1,119] = 0
-	plazasVendidas[2,79] = 0
-	plazasVendidas[3,79] = 0
+	plazasVendidas[0] = 0
+	plazasVendidas[1] = 0
+	plazasVendidas[2] = 0
+	plazasVendidas[3] = 0
 	
 	
 	Escribir "Bienvenido/a"
@@ -52,11 +52,11 @@ Algoritmo tpProgramacion
 				Leer rutaSeleccionada
 				Escribir "------------------------"
 				Escribir "Ingrese el número de asiento que desea buscar:"
-				Leer asiento
+				Leer asientoNumerico
 				Escribir "------------------------"
-				Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 0]
-				Escribir "Ruta: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 2]
-				Escribir "DNI: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 1]
+				Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico-1, 0]
+				Escribir "Ruta: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 2]
+				Escribir "DNI: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 1]
 				
 //					buscarPasajeroAsiento(datosPasajeros, numeroAsiento, plazasVendidas, dim, rutaSeleccionada, rutasAereas)
 			"3": 
@@ -69,7 +69,7 @@ Algoritmo tpProgramacion
 				Escribir "4. Mar Del Plata - Mendoza"
 				Leer rutaSeleccionada
 				
-				buscarPorNombreyApellido(datosPasajeros, dim, nombreApellidoBuscado, rutasAereas, rutaSeleccionada)
+				buscarPorNombreyApellido(datosPasajeros, dim, nombreApellidoBuscado, rutasAereas, rutaSeleccionada, asientoNumerico)
 				//busqueda pasaje
 			"4":
 				Escribir "Ingrese el destino que desea mostrar"
@@ -83,12 +83,10 @@ Algoritmo tpProgramacion
 				Escribir "2. Por numero de asiento Descendente"
 				Leer eleccion
 				Si eleccion == 1 Entonces 
-					ordenarArregloASC(plazasVendidas, dimFila, rutaSeleccionada, datosPasajeros)
+					ordenarArregloASC(plazasVendidas, dimFila, rutaSeleccionada, rutasAereas, datosPasajeros, asientoNumerico)
 					
-				
-//					ordernarArregloASC(plazasVendidas,n,m,columnaAOrdenar)
-//					Sino
-//						OrdenamientoDescendente
+					Sino
+						ordenarArregloDESC(plazasVendidas, dimFila, rutaSeleccionada, rutasAereas, datosPasajeros, asientoNumerico)
 				FinSi
 				
 			"5":
@@ -98,10 +96,10 @@ Algoritmo tpProgramacion
 				Si eleccion == 1 Entonces
 					
 					Escribir "------------------------"
-					Escribir "Pasajes vendidos: ", plazasVendidas[0, asiento]
-					Escribir "Pasajes vendidos: ", plazasVendidas[1, asiento]
-					Escribir "Pasajes vendidos: ", plazasVendidas[2, asiento]
-					Escribir "Pasajes vendidos: ", plazasVendidas[3, asiento]
+					Escribir "Pasajes vendidos: ", plazasVendidas[0]
+					Escribir "Pasajes vendidos: ", plazasVendidas[1]
+					Escribir "Pasajes vendidos: ", plazasVendidas[2]
+					Escribir "Pasajes vendidos: ", plazasVendidas[3]
 					Escribir "------------------------"
 					
 				SiNo
@@ -114,7 +112,7 @@ Algoritmo tpProgramacion
 FinAlgoritmo
 
 
-Funcion venta <- ventaPasaje(rutasAereas, plazasVendidas, cantidadPasajeros, datosPasajeros)
+Funcion venta <- ventaPasaje(rutasAereas, plazasVendidas, cantidadPasajeros, datosPasajeros Por Referencia)
 	
 	Definir nombreApellido, nroDni, ruta, telefono, numPasajeroFrec, confirmacionAsiento  Como Caracter
 	Definir equipaje Como Logico
@@ -156,23 +154,22 @@ Funcion datos <- cargaDatosPasajero(datosPasajeros, cantidadPasajeros, rutasAere
 	Definir asientoNumerico Como Entero
 	equipaje = falso
 	
-	plazasVendidas[0,119] = 0
-	plazasVendidas[1,119] = 0
-	plazasVendidas[2,79] = 0
-	plazasVendidas[3,79] = 0
+//	plazasVendidas[0,119] = 0
+//	plazasVendidas[1,119] = 0
+//	plazasVendidas[2,79] = 0
+//	plazasVendidas[3,79] = 0
 	
 	//valido que haya asientos disponibles en las rutas
-	Si cantidadPasajeros[rutaSeleccionada - 1] > plazasVendidas[rutaSeleccionada - 1, asiento] Entonces
+	Si cantidadPasajeros[rutaSeleccionada - 1] > plazasVendidas[rutaSeleccionada - 1] Entonces
 		
 		Escribir "Hay asientos disponibles"
 		Escribir "Desea reservar un asiento para esta ruta?"
 		Leer confirmacionAsiento
 		
 		Si confirmacionAsiento == "si" o confirmacionAsiento == "Si" o confirmacionAsiento == "SI" Entonces
-			plazasVendidas[rutaSeleccionada - 1, asiento] = plazasVendidas[rutaSeleccionada - 1, asiento] + 1 // asiento vendido
-			asientoNumerico = plazasVendidas[rutaSeleccionada - 1, asiento] // asigno asiento
-			Escribir "Ruta ", rutaSeleccionada, ", Asiento ", asientoNumerico, " - Plazas Vendidas: ", plazasVendidas[rutaSeleccionada-1, asiento]
-
+			plazasVendidas[rutaSeleccionada - 1] = plazasVendidas[rutaSeleccionada - 1] + 1 // asiento vendido
+			asientoNumerico = plazasVendidas[rutaSeleccionada - 1] // asigno asiento
+			Escribir "Ruta ", rutaSeleccionada, ", Asiento ", asientoNumerico, " - Plazas Vendidas: ", plazasVendidas[rutaSeleccionada-1]
 		FinSi
 		
 		Escribir "Ingrese su nombre y apellido"
@@ -189,13 +186,8 @@ Funcion datos <- cargaDatosPasajero(datosPasajeros, cantidadPasajeros, rutasAere
 			Leer nroDni
 		FinMientras
 		
-		
 		Escribir "Ingrese su numero de telefono (+54: 10 dígitos sin espacios ni guiones)"
 		Leer telefono
-//		Mientras Longitud(telefono) > 10
-//			Escribir "El número de teléfono ingresado es incorrecto. Ingrese 10 dígitos numéricos sin espacios ni guiones."
-//			Leer numeroTelefono
-//		FinMientras
 		
 		Escribir "Si desea llevar equipaje en bodega ingrese 1 de lo contrario ingrese 0"
 		Leer eleccionEquipaje
@@ -215,24 +207,23 @@ Funcion datos <- cargaDatosPasajero(datosPasajeros, cantidadPasajeros, rutasAere
 		FinMientras
 		
 		// Almaceno los datos en el arreglo datosPasajeros
-		datosPasajeros[rutasAereas[rutaSeleccionada - 1], 0] = nombreApellido
-		datosPasajeros[rutasAereas[rutaSeleccionada -1], 1] = nroDni
-		datosPasajeros[rutasAereas[rutaSeleccionada -1], 2] = rutasAereas[rutaSeleccionada - 1]
-		datosPasajeros[rutasAereas[rutaSeleccionada -1], 3] = telefono
-		datosPasajeros[rutasAereas[rutaSeleccionada -1], 4] = numPasajeroFrec
-		datosPasajeros[rutasAereas[rutaSeleccionada -1], 5] = ConvertirATexto(asientoNumerico)
-		
+		datosPasajeros[rutasAereas[rutaSeleccionada - 1], asientoNumerico -1,  0] = nombreApellido
+		datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 1] = nroDni
+		datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 2] = rutasAereas[rutaSeleccionada - 1]
+		datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1,3] = telefono
+		datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1,4] = numPasajeroFrec
+		datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1,5] = ConvertirATexto(asientoNumerico)
 		
 		//Resumen venta
 		Escribir "Resumen del vuelo"
 		Escribir "------------------"
-		Escribir "Ruta: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 2]
-		Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 0]
-		Escribir "Dni: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 1]
-		Escribir "Telefono: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 3]
+		Escribir "Ruta: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 2]
+		Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 0]
+		Escribir "Dni: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 1]
+		Escribir "Telefono: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 3]
 		Escribir "Equipaje en bodega: ", equipaje
-		Escribir "Número pasajero frecuente: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 4]
-		Escribir "Asiento: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 5] 
+		Escribir "Número pasajero frecuente: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 4]
+		Escribir "Asiento: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 5] 
 		
 		costo <- costoPasaje(rutaSeleccionada, plazasVendidas, equipaje) 
 	Sino 
@@ -248,14 +239,14 @@ Funcion  costo <- costoPasaje(rutaSeleccionada, plazasVendidas, equipaje)
 	
 	Segun rutaSeleccionada Hacer
 		Caso 1:
-			Si plazasVendidas[0, 119] <= 20 Entonces
+			Si plazasVendidas[0] <= 20 Entonces
 				costo = 150000
 				Si equipaje == Verdadero Entonces
 					costo = costo * 0.05 + costo
 				FinSi
 				Escribir "El costo del pasaje es: $", costo
 			Sino 
-				Si plazasVendidas[0, 119] > 20 y plazasVendidas[0] <= 60 Entonces
+				Si plazasVendidas[0] > 20 y plazasVendidas[0] <= 60 Entonces
 					costo = 150000 * 0.10 + 150000
 					Si equipaje == Verdadero Entonces
 						costo = costo * 0.05 + costo
@@ -271,14 +262,14 @@ Funcion  costo <- costoPasaje(rutaSeleccionada, plazasVendidas, equipaje)
 			FinSi
 			
 		Caso 2:
-			Si plazasVendidas[1, 119] <= 20 Entonces
+			Si plazasVendidas[1] <= 20 Entonces
                 costo = 120000
 				Si equipaje == Verdadero Entonces
 					costo = costo * 0.05 + costo
 				FinSi
 				Escribir "El costo del pasaje es: $", costo
 			SiNo
-				Si plazasVendidas[1, 119] > 20 y plazasVendidas[1, 119] <= 60 Entonces
+				Si plazasVendidas[1] > 20 y plazasVendidas[1] <= 60 Entonces
 					costo = 120000 * 0.10 + 120000
 					Si equipaje == Verdadero Entonces
 						costo = costo * 0.05 + costo
@@ -294,14 +285,14 @@ Funcion  costo <- costoPasaje(rutaSeleccionada, plazasVendidas, equipaje)
 			FinSi
 			
 		Caso 3:
-			Si plazasVendidas[2 , 79] <= 10 Entonces
+			Si plazasVendidas[2] <= 10 Entonces
 				costo = 7000
 				Si equipaje == Verdadero Entonces
 					costo = costo * 0.05 + costo
 				FinSi
 				Escribir "El costo del pasaje es: $", costo
 			Sino 
-				Si plazasVendidas[2, 79] > 10 y plazasVendidas[2] <= 40 Entonces
+				Si plazasVendidas[2] > 10 y plazasVendidas[2] <= 40 Entonces
 					costo = 70000 * 0.15 + 70000
 					Si equipaje == Verdadero Entonces
 						costo = costo * 0.05 + costo
@@ -316,7 +307,7 @@ Funcion  costo <- costoPasaje(rutaSeleccionada, plazasVendidas, equipaje)
 				FinSi
 			FinSi
 		Caso 4:
-			Si plazasVendidas[3, 79] <= 10 Entonces
+			Si plazasVendidas[3] <= 10 Entonces
                 costo = 95000
 				Si equipaje == Verdadero Entonces
 					costo = costo * 0.05 + costo
@@ -342,62 +333,97 @@ Funcion  costo <- costoPasaje(rutaSeleccionada, plazasVendidas, equipaje)
 FinFuncion
 
 //busco por nombre y apellido
-Subproceso buscarPorNombreyApellido(datosPasajeros, dim, nombreApellidoBuscado, rutasAereas, rutaSeleccionada Por Valor)
-	Definir encontrado Como Logico
-    encontrado = Falso
+Subproceso buscarPorNombreyApellido(datosPasajeros, dim, nombreApellidoBuscado, rutasAereas, rutaSeleccionada, asientoNumerico Por Valor)
 	
-	Para i = 0 Hasta dim-1 Hacer
-		Si datosPasajeros[rutasAereas[rutaSeleccionada -1], 0] == nombreApellidoBuscado Entonces
-			encontrado = Verdadero
+		Si datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 0] == nombreApellidoBuscado Entonces
+			
 			Escribir "------------------------"
-			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 0]
-			Escribir "Ruta: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 2]
-			Escribir "DNI: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], 1]
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 0]
+			Escribir "Ruta: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 2]
+			Escribir "DNI: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], asientoNumerico -1, 1]
 			Escribir "------------------------"
 		SiNo
 			Escribir "Pasajero no encontrado para el nombre y apellido: ", nombreApellidoBuscado
 		FinSi
-    FinPara
-	
+
 FinSubProceso
 
-//SubProceso ordenamientoAscendente(datosPasajeros, dim, rutaSeleccionada, rutasAereas)
-//	Definir aux como Entero
-	
-//	Para i=0 hasta n-2 hacer
-//		Para j=i+1 hasta n-1 hacer
-//			Si datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] > datosPasajeros[rutaSeleccionada-1, j, 5] Entonces
-//				aux = datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5]
-//				datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] = datosPasajeros[rutaSeleccionada-1, j, 5]
-//				datosPasajeros[rutasAereas[rutaSeleccionada -1], j, 5] = Aux
-//			FinSi
-//		FinPara
-//	FinPara
-	
-SubProceso ordenarArregloASC(plazasVendidas, dimFila, rutaSeleccionada, datosPasajeros)
+SubProceso ordenarArregloASC(plazasVendidas, dimFila, rutaSeleccionada, rutasAereas, datosPasajeros, asientoNumerico)
+	Definir i como entero
+	i = 0
 	Si rutaSeleccionada == 1 Entonces
-		para i<-0 hasta dimFila1-1
-//			escribir Sin Saltar "Nombre y apellido: "
-			escribir plazasVendidas[0,119]
-		FinPara
+		
+		para i<-0 hasta asientoNumerico+1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] 
+		Fin para
+		
+	FinSi
+	Si rutaSeleccionada == 2 Entonces
+		
+		para i<-0 hasta asientoNumerico+1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ",  datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] 
+		Fin para
+		
+	FinSi
+	Si rutaSeleccionada == 3 Entonces
+		
+		para i<-0 hasta asientoNumerico+1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ",  datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5]  
+		Fin para
+		
+	FinSi
+	Si rutaSeleccionada == 4 Entonces
+		
+		para i<-0 hasta asientoNumerico+1
+				Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+				Escribir "Asiento: ",  datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5]  
+		Fin para
+		
 	FinSi
 	
-
 FinSubProceso
 
-//SubProceso OrdenamientoDescendente(Pasajero, Num)
-//			Definir Aux como Entero
-//			Para i=0 hasta n-2 hacer
-//				Para j=i+1 hasta n-1 hacer
-//					Si Pasajero [i] < Pasajero [j] entonces
-//						Aux = Pasajero [i]
-//						Pasajero [i] = Pasajero [j]
-//						Pasajero [j] = Aux
-//					FinSi
-//				FinPara
-//			FinPara
-//FinProceso
-//
+SubProceso ordenarArregloDESC(plazasVendidas, dimFila, rutaSeleccionada, rutasAereas, datosPasajeros, asientoNumerico)
+	Definir i como entero
+	i = 0
+	Si rutaSeleccionada == 1 Entonces
+		
+		para i<-asientoNumerico+1 hasta 0 con paso -1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] 
+		Fin para
+		
+	FinSi
+	Si rutaSeleccionada == 2 Entonces
+		
+		para i<-asientoNumerico+1 hasta 0 con paso -1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ",  datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5] 
+		Fin para
+		
+	FinSi
+	Si rutaSeleccionada == 3 Entonces
+		
+		para i<-asientoNumerico+1 hasta 0 con paso -1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ",  datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5]  
+		Fin para
+		
+	FinSi
+	Si rutaSeleccionada == 4 Entonces
+		
+		para i<-asientoNumerico+1 hasta 0 con paso -1
+			Escribir "Nombre y Apellido: ", datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 0]
+			Escribir "Asiento: ",  datosPasajeros[rutasAereas[rutaSeleccionada -1], i, 5]  
+		Fin para
+		
+	FinSi
+	
+FinSubProceso
+
 
 Subproceso porcentajeVentas(plazasVendidas, cantidadPasajeros, dim, rutasAereas, dim)
     // Lista de porcentaje de ventas por ruta aérea
@@ -407,19 +433,19 @@ Subproceso porcentajeVentas(plazasVendidas, cantidadPasajeros, dim, rutasAereas,
 	Escribir "Porcentaje de ventas por ruta aerea:"
 	
 	Si cantidadPasajeros[0] > 0 Entonces
-		porcentaje = (plazasVendidas[0, asiento] * 100) / cantidadPasajeros[0]
+		porcentaje = (plazasVendidas[0] * 100) / cantidadPasajeros[0]
 		Escribir rutasAereas[0], ": ", porcentaje, "%"
 	FinSi
 	Si cantidadPasajeros[1] > 0 Entonces
-		porcentaje = (plazasVendidas[1,asiento] * 100) / cantidadPasajeros[1]
+		porcentaje = (plazasVendidas[1] * 100) / cantidadPasajeros[1]
 		Escribir rutasAereas[1], ": ", porcentaje, "%"
 	FinSi
 	Si cantidadPasajeros[2] > 0 Entonces
-		porcentaje = (plazasVendidas[2, asiento] * 100) / cantidadPasajeros[2]
+		porcentaje = (plazasVendidas[2] * 100) / cantidadPasajeros[2]
 		Escribir rutasAereas[2], ": ", porcentaje, "%"
 	FinSi
 	Si cantidadPasajeros[3] > 0 Entonces
-		porcentaje = (plazasVendidas[3, asiento] * 100) / cantidadPasajeros[3]
+		porcentaje = (plazasVendidas[3] * 100) / cantidadPasajeros[3]
 		Escribir rutasAereas[3], ": ", porcentaje, "%"
 	FinSi
 		
